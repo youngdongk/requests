@@ -13,6 +13,10 @@ from urllib.parse import urlparse
 
 # List of allowed domains
 allowed_domains = [
+    '169.254.169.254',
+    '127.0.0.1',
+    'localhost',
+    'internal'
     'dataiku.com',
     'dataiku.io',
     'amazonaws.com'
