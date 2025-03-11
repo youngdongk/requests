@@ -9,9 +9,30 @@ This module implements the Requests API.
 """
 
 from . import sessions
+from urllib.parse import urlparse
 
+# List of allowed domains
+allowed_domains = [
+    'dataiku.com',
+    'dataiku.io',
+    'amazonaws.com'
+]
 
 def request(method, url, **kwargs):
+
+    parsed_url = urlparse(url)
+    domain = parsed_url.netloc
+
+    if ':' in domain:
+        domain = domain.split(':')[0]
+
+    # Check if the domain ends with any of the allowed domains
+    if not any(domain.endswith(allowed_domain) for allowed_domain in allowed_domains):
+        raise ValueError(f"The URL {url} is not allowed. Only URLs ending with {', '.join(allowed_domains)} are permitted.")
+    
+    # If the domain is valid, you can proceed with your logic here
+    print(f"URL {url} is valid.")
+
     """Constructs and sends a :class:`Request <Request>`.
 
     :param method: method for the new :class:`Request` object: ``GET``, ``OPTIONS``, ``HEAD``, ``POST``, ``PUT``, ``PATCH``, or ``DELETE``.
